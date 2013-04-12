@@ -197,6 +197,9 @@ public class SectionAllocation {
         }
         // Simple check to make sure we could actually allocate the required number of seats
         if (seats.size() == seatCount) {
+            for (Seat seat : seats) {
+                allocate(seat.getRowNumber() - 1, seat.getNumber() - 1, 1, expirationTimestamp());
+            }
             return seats;
         } else {
             return Collections.emptyList();
@@ -308,6 +311,10 @@ public class SectionAllocation {
 
     public Long getId() {
         return id;
+    }
+
+    private long expirationTimestamp() {
+        return System.currentTimeMillis() + EXPIRATION_TIME;
     }
 
 }
